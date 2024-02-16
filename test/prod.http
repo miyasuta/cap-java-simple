@@ -1,0 +1,27 @@
+@authurl=https://4395c46atrial.authentication.us10.hana.ondemand.com
+@clientId=sb-java-simple-4395c46atrial-dev!t230421
+@clientSecret=IntC754ZuGHtQ9rtpgWnOmk66GQ=
+@appurl=4395c46atrial-dev-java-simple-srv.cfapps.us10-001.hana.ondemand.com
+
+### Get JWT token
+# @name getCredentials
+POST {{authurl}}/oauth/token?grant_type=client_credentials
+Authorization: Basic {{clientId}} {{clientSecret}}
+
+@token =  {{getCredentials.response.body.access_token}}
+
+### Get top 10 entities served in admin service
+GET {{appurl}}/odata/v4/CatalogService/Books?$count=true&$top=10 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+POST {{appurl}}/odata/v4/CatalogService/Books
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "ID": 3,
+    "title": "ProdTest",
+    "stock": 10
+}

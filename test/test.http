@@ -1,0 +1,16 @@
+@server=http://localhost:8080
+
+###
+GET {{server}}/odata/v4/CatalogService/Books
+Authorization: Basic privileged:
+
+###
+POST {{server}}/odata/v4/CatalogService/Books
+Content-Type: application/json
+Authorization: Basic privileged:
+
+{
+    "ID": 3,
+    "title": "LocalTest",
+    "stock": 10
+}
